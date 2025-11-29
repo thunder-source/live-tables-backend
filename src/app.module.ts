@@ -11,6 +11,7 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 import { WorkspacesModule } from './modules/workspaces/workspaces.module';
 import { HealthModule } from './modules/health/health.module';
 import { ConnectionsModule } from './modules/connections/connections.module';
+import { BasesModule } from './modules/bases/bases.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { ConnectionsModule } from './modules/connections/connections.module';
     WorkspacesModule,
     HealthModule,
     ConnectionsModule,
+    BasesModule,
   ],
   controllers: [AppController],
   providers: [
