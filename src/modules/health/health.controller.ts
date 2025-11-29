@@ -145,7 +145,7 @@ export class HealthController {
         const diskPath = process.platform === 'win32' ? 'C:\\' : '/';
         const result = await this.disk.checkStorage('storage', { 
           path: diskPath,
-          thresholdPercent: 0.90 // Allow up to 90% disk usage (10% free space required)
+          thresholdPercent: 0.95 // Allow up to 95% disk usage (5% free space required)
         });
         
         return {

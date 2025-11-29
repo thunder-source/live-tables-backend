@@ -166,34 +166,34 @@ interface IDatabaseAdapter {
 ### **Phase 4: External Database Connectivity** (Week 7-8)
 
 #### 4.1 PostgreSQL Adapter
-- [ ] Implement PostgreSQL connection handling
-- [ ] Create schema discovery for PostgreSQL
-- [ ] Implement LQP to SQL translation
-- [ ] Add support for complex joins
-- [ ] Implement parameterized query execution
-- [ ] Add connection pooling (pg-pool)
+- [x] Implement PostgreSQL connection handling
+- [x] Create schema discovery for PostgreSQL
+- [x] Implement LQP to SQL translation
+- [x] Add support for complex joins
+- [x] Implement parameterized query execution
+- [x] Add connection pooling (pg-pool)
 
 #### 4.2 MongoDB Adapter
-- [ ] Implement MongoDB connection handling
-- [ ] Create collection schema discovery
-- [ ] Implement LQP to aggregation pipeline translation
-- [ ] Add support for MongoDB-specific operations
-- [ ] Handle document structure analysis
-- [ ] Implement connection retry logic
+- [x] Implement MongoDB connection handling
+- [x] Create collection schema discovery
+- [x] Implement LQP to aggregation pipeline translation
+- [x] Add support for MongoDB-specific operations
+- [x] Handle document structure analysis
+- [x] Implement connection retry logic
 
-#### 4.3 MySQL Adapter (Optional)
-- [ ] Implement MySQL connection handling
-- [ ] Create schema discovery for MySQL
-- [ ] Implement LQP to SQL translation
-- [ ] Add MySQL-specific optimizations
+#### 4.3 MySQL Adapter
+- [x] Implement MySQL connection handling
+- [x] Create schema discovery for MySQL
+- [x] Implement LQP to SQL translation
+- [x] Add MySQL-specific optimizations
 
 #### 4.4 Connection Management
-- [ ] Create connection configuration CRUD
-- [ ] Implement credential encryption (AES-256-GCM)
-- [ ] Set up KMS integration for key management
-- [ ] Create connection testing endpoint
-- [ ] Implement connection caching
-- [ ] Add connection health monitoring
+- [x] Create connection configuration CRUD
+- [x] Implement credential encryption (AES-256-GCM)
+- [ ] Set up KMS integration for key management (Deferred to Phase 10)
+- [x] Create connection testing endpoint
+- [x] Implement connection caching
+- [x] Add connection health monitoring
 
 **API Endpoints:**
 ```
@@ -679,7 +679,7 @@ GET    /public/views/:slug/data
 | Phase 1: Foundation | Week 1-2 | ✅ Completed |
 | Phase 2: Workspace & RBAC | Week 3-4 | ✅ Completed |
 | Phase 3: Data Abstraction Layer | Week 5-6 | ✅ Completed |
-| Phase 4: External DB Connectivity | Week 7-8 | ⏳ Pending |
+| Phase 4: External DB Connectivity | Week 7-8 | ✅ Completed |
 | Phase 5: Internal Mini-DB | Week 9-11 | ⏳ Pending |
 | Phase 6: Views System | Week 12-13 | ⏳ Pending |
 | Phase 7: Real-Time Collaboration | Week 14-15 | ⏳ Pending |
@@ -695,26 +695,28 @@ GET    /public/views/:slug/data
 
 ## 🎯 Milestones
 
-### Milestone 1: MVP Backend (Week 8)
+### Milestone 1: MVP Backend (Week 8) ✅
 - ✅ Authentication & authorization working
 - ✅ Workspace management
 - ✅ Basic RBAC
 - ✅ PostgreSQL adapter functional
-- ✅ Basic internal mini-DB CRUD
+- ✅ MongoDB adapter functional
+- ✅ MySQL adapter functional
+- ⏳ Basic internal mini-DB CRUD (Phase 5)
 
 ### Milestone 2: Feature Complete (Week 17)
 - ✅ All database adapters working
-- ✅ Views with joins and computed columns
-- ✅ Real-time collaboration
-- ✅ Audit logging
-- ✅ View as API
+- ⏳ Views with joins and computed columns
+- ⏳ Real-time collaboration
+- ⏳ Audit logging
+- ⏳ View as API
 
 ### Milestone 3: Production Ready (Week 22)
-- ✅ Security hardened
-- ✅ Performance optimized
-- ✅ Fully tested (unit, integration, E2E, load)
-- ✅ Deployed to cloud
-- ✅ Monitoring and alerting configured
+- ⏳ Security hardened
+- ⏳ Performance optimized
+- ⏳ Fully tested (unit, integration, E2E, load)
+- ⏳ Deployed to cloud
+- ⏳ Monitoring and alerting configured
 
 ---
 
