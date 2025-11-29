@@ -8,6 +8,8 @@ import configuration from './config/configuration';
 import { getDatabaseConfig } from './config/database.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
+import { WorkspacesModule } from './modules/workspaces/workspaces.module';
+import { HealthModule } from './modules/health/health.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { JwtAuthGuard } from './common/guards/jwt-auth.guard';
 
     // Modules
     AuthModule,
+    WorkspacesModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [

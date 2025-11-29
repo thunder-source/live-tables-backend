@@ -28,4 +28,7 @@ export class Workspace extends BaseEntity {
 
   @Column({ type: 'jsonb', nullable: true })
   settings?: Record<string, any>;
+
+  @OneToMany('WorkspaceMember', 'workspace')
+  members: any[];
 }

@@ -48,7 +48,7 @@ This will start:
 - PostgreSQL Mini-DB (port 5433)
 - Redis (port 6379)
 - MongoDB (port 27017) - for testing
-- MySQL (port 3306) - for testing
+- MySQL (port 3307) - for testing
 - pgAdmin (port 5050) - optional DB management UI
 
 5. **Run database migrations** (when ready)
@@ -89,18 +89,118 @@ npm run test:cov
 
 ## 📚 API Documentation
 
-Once the server is running, the API will be available at:
+Once the server is running, access the **interactive Swagger API documentation** at:
+```
+http://localhost:3000/api/docs
+```
+
+The Swagger UI provides:
+- 🔍 Complete API endpoint documentation
+- 🧪 Interactive "Try it out" functionality
+- 📝 Request/response schemas
+- 🔐 JWT authentication testing
+
+### API Base URL
 ```
 http://localhost:3000/api/v1
 ```
+
+### Health Check
+```
+GET /api/v1/health
+```
+**Public endpoint** (no authentication required)
+
+Returns comprehensive system health status including:
+- 🗄️ **Database** - PostgreSQL connectivity with response time
+- 🔴 **Redis** - Cache connectivity and performance
+- 💾 **Memory** - Heap and RSS usage with limits
+- 💿 **Disk** - Storage availability and path
+- 🖥️ **System** - OS info, CPU, total memory, load average
+- 📦 **Application** - Version, environment, process info, uptime
+- ⏱️ **Timestamps** - Current time and application uptime
+
+Response example:
+```json
+{
+  "status": "ok",
+  "timestamp": "2024-01-01T12:00:00.000Z",
+  "uptime": 3600,
+  "info": {
+    "database": { 
+      "status": "up", 
+      "responseTime": "15ms" 
+    },
+    "redis": { 
+      "status": "up", 
+      "responseTime": "2ms",
+      "host": "localhost",
+      "port": 6379
+    },
+    "memory_heap": { 
+      "status": "up", 
+      "used": "150 MB", 
+      "limit": "300 MB",
+      "percentage": "50%" 
+    },
+    "memory_rss": { 
+      "status": "up", 
+      "used": "200 MB", 
+      "limit": "500 MB",
+      "percentage": "40%"
+    },
+    "storage": { 
+      "status": "up",
+      "path": "C:\\"
+    },
+    "system": {
+      "status": "up",
+      "platform": "win32",
+      "arch": "x64",
+      "nodeVersion": "v18.0.0",
+      "cpuCores": 8,
+      "cpuModel": "Intel Core i7",
+      "totalMemory": "16 GB",
+      "freeMemory": "8 GB",
+      "usedMemory": "8 GB",
+      "memoryUsagePercent": "50%",
+      "uptime": "5d 12h 30m 45s",
+      "loadAverage": [1.5, 1.3, 1.2]
+    },
+    "application": {
+      "status": "up",
+      "name": "live-tables-backend",
+      "version": "0.0.1",
+      "environment": "development",
+      "processId": 12345,
+      "processUptime": "1h 30m 15s"
+    }
+  },
+  "details": { ... }
+}
+```
+
+
 
 ### Authentication Endpoints
 
 - `POST /api/v1/auth/register` - Register new user
 - `POST /api/v1/auth/login` - Login user
 - `POST /api/v1/auth/refresh` - Refresh access token
-- `POST /api/v1/auth/logout` - Logout user
-- `GET /api/v1/auth/me` - Get current user profile
+- `POST /api/v1/auth/logout` - Logout user (requires JWT)
+- `GET /api/v1/auth/me` - Get current user profile (requires JWT)
+
+### Workspace Endpoints
+
+- `POST /api/v1/workspaces` - Create workspace
+- `GET /api/v1/workspaces` - List user workspaces
+- `GET /api/v1/workspaces/:id` - Get workspace details
+- `PATCH /api/v1/workspaces/:id` - Update workspace (Admin+)
+- `DELETE /api/v1/workspaces/:id` - Delete workspace (Owner)
+- `POST /api/v1/workspaces/:id/members` - Invite member (Admin+)
+- `DELETE /api/v1/workspaces/:id/members/:memberId` - Remove member (Admin+)
+- `GET /api/v1/workspaces/:id/members` - List workspace members
+
 
 ## 🗄️ Database Access
 
