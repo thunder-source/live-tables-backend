@@ -1,0 +1,143 @@
+version: '3.8'
+
+services:
+  # Main PostgreSQL Database (for application metadata, users, workspaces, etc.)
+  postgres_main:
+    image: postgres:15-alpine
+    container_name: live_tables_postgres_main
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: live_tables_main
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_main_data:/var/lib/postgresql/data
+    networks:
+      - live_tables_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Internal Mini-DB PostgreSQL (for user-created tables)
+  postgres_mini_db:
+    image: postgres:15-alpine
+    container_name: live_tables_postgres_mini_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: live_tables_mini_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_mini_db_data:/var/lib/postgresql/data
+    networks:
+      - live_tables_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis (for caching, pub/sub, sessions)
+  redis:
+    image: redis:7-alpine
+    container_name: live_tables_redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - live_tables_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MongoDB (for testing external DB adapter)
+  mongodb:
+    image: mongo:7
+    container_name: live_tables_mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin123
+      MONGO_INITDB_DATABASE: test_db
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - live_tables_network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # MySQL (for testing external DB adapter)
+  mysql:
+    image: mysql:8
+    container_name: live_tables_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: testuser
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - live_tables_network
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # pgAdmin (optional - for database management UI)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: live_tables_pgadmin
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@livetables.com
+      PGADMIN_DEFAULT_PASSWORD: admin123
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    networks:
+      - live_tables_network
+    depends_on:
+      - postgres_main
+      - postgres_mini_db
+
+volumes:
+  postgres_main_data:
+    driver: local
+  postgres_mini_db_data:
+    driver: local
+  redis_data:
+    driver: local
+  mongodb_data:
+    driver: local
+  mysql_data:
+    driver: local
+  pgadmin_data:
+    driver: local
+
+networks:
+  live_tables_network:
+    driver: bridge
