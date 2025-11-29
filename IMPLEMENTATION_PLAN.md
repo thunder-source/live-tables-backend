@@ -319,12 +319,12 @@ POST   /api/v1/tables/:id/rows/bulk
 ### **Phase 6: Views System** (Week 12-13)
 
 #### 6.1 View Definition
-- [ ] Create view metadata schema
-- [ ] Implement view CRUD operations
-- [ ] Store view configuration (filters, sorts, joins)
-- [ ] Create view versioning system
-- [ ] Add view permissions (who can access)
-- [ ] Implement view templates
+- [x] Create view metadata schema
+- [x] Implement view CRUD operations
+- [x] Store view configuration (filters, sorts, joins) - JSONB storage
+- [ ] Create view versioning system (Future)
+- [x] Add view permissions (who can access) - Public/Private views
+- [ ] Implement view templates (Future)
 
 **View Schema:**
 ```typescript
@@ -342,12 +342,12 @@ interface ViewDefinition {
 ```
 
 #### 6.2 View Execution
-- [ ] Implement view data fetching
-- [ ] Create view LQP generation
-- [ ] Add support for cross-table views
-- [ ] Implement view caching
-- [ ] Add cache invalidation logic
-- [ ] Create view materialization (optional)
+- [x] Implement view data fetching
+- [x] Create view LQP generation from configuration
+- [ ] Add support for cross-table views (Future)
+- [ ] Implement view caching (Future)
+- [ ] Add cache invalidation logic (Future)
+- [ ] Create view materialization (optional) (Future)
 
 **API Endpoints:**
 ```
@@ -360,13 +360,13 @@ GET    /api/v1/views/:id/data
 ```
 
 #### 6.3 Computed Columns & Formulas
-- [ ] Design formula expression language
-- [ ] Create formula parser
-- [ ] Implement formula evaluator
-- [ ] Support basic operations (+, -, *, /, etc.)
-- [ ] Add functions (SUM, AVG, COUNT, etc.)
-- [ ] Implement field references
-- [ ] Add error handling for invalid formulas
+- [x] Design formula expression language - Field refs, operators, functions
+- [x] Create formula parser
+- [x] Implement formula evaluator
+- [x] Support basic operations (+, -, *, /, %)
+- [x] Add functions (UPPER, LOWER, CONCAT, IF)
+- [x] Implement field references - {fieldName} syntax
+- [x] Add error handling for invalid formulas - Validation on create/update
 
 ---
 

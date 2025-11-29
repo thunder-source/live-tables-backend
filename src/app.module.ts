@@ -12,6 +12,7 @@ import { WorkspacesModule } from './modules/workspaces/workspaces.module';
 import { HealthModule } from './modules/health/health.module';
 import { ConnectionsModule } from './modules/connections/connections.module';
 import { BasesModule } from './modules/bases/bases.module';
+import { ViewsModule } from './modules/views/views.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { BasesModule } from './modules/bases/bases.module';
     HealthModule,
     ConnectionsModule,
     BasesModule,
+    ViewsModule,
   ],
   controllers: [AppController],
   providers: [
