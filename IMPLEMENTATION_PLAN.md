@@ -209,22 +209,44 @@ POST   /api/v1/connections/:id/query
 
 ---
 
-### **Phase 5: Internal Mini-DB** (Week 9-11)
+### **Phase 5: Base & Internal Mini-DB** (Week 9-11)
 
-#### 5.1 Base Table Management
-- [ ] Create base table metadata schema
-- [ ] Implement base table CRUD operations
+#### 5.1 Base Management
+- [ ] Create base metadata schema
+- [ ] Implement base CRUD operations
+- [ ] Implement base duplication/template system
+- [ ] Add base customization (color, icon, description)
+- [ ] Implement base-level permissions (if different from workspace)
+
+**Database Schema (Bases):**
+```sql
+CREATE TABLE bases (
+  id UUID PRIMARY KEY,
+  workspace_id UUID NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  description TEXT,
+  color VARCHAR(50),
+  icon VARCHAR(50),
+  created_at TIMESTAMP DEFAULT NOW(),
+  created_by UUID,
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### 5.2 Table Management
+- [ ] Create table metadata schema
+- [ ] Implement table CRUD operations
 - [ ] Create dynamic PostgreSQL table creation
 - [ ] Implement schema versioning
 - [ ] Add table-level settings (validation, constraints)
 - [ ] Create table archiving/soft delete
 
-**Database Schema:**
+**Database Schema (Tables):**
 ```sql
-CREATE TABLE base_tables (
+CREATE TABLE tables (
   id UUID PRIMARY KEY,
-  workspace_id UUID NOT NULL,
-  table_name VARCHAR(255) NOT NULL,
+  base_id UUID NOT NULL,
+  name VARCHAR(255) NOT NULL,
   physical_table_name VARCHAR(255) NOT NULL,
   description TEXT,
   created_at TIMESTAMP DEFAULT NOW(),
@@ -233,7 +255,7 @@ CREATE TABLE base_tables (
 );
 ```
 
-#### 5.2 Column Management
+#### 5.3 Column Management
 - [ ] Create column metadata schema
 - [ ] Implement column CRUD operations
 - [ ] Support multiple data types (string, number, boolean, date, etc.)
@@ -251,7 +273,7 @@ CREATE TABLE base_tables (
 - User reference
 - File/Attachment
 
-#### 5.3 Row Data Management
+#### 5.4 Row Data Management
 - [ ] Implement row CRUD operations
 - [ ] Add bulk row operations
 - [ ] Create efficient pagination (cursor-based)
@@ -261,8 +283,14 @@ CREATE TABLE base_tables (
 
 **API Endpoints:**
 ```
-GET    /api/v1/tables
-POST   /api/v1/tables
+GET    /api/v1/workspaces/:workspaceId/bases
+POST   /api/v1/workspaces/:workspaceId/bases
+GET    /api/v1/bases/:id
+PUT    /api/v1/bases/:id
+DELETE /api/v1/bases/:id
+
+GET    /api/v1/bases/:baseId/tables
+POST   /api/v1/bases/:baseId/tables
 GET    /api/v1/tables/:id
 PUT    /api/v1/tables/:id
 DELETE /api/v1/tables/:id
@@ -278,7 +306,7 @@ DELETE /api/v1/tables/:tableId/rows/:rowId
 POST   /api/v1/tables/:id/rows/bulk
 ```
 
-#### 5.4 Internal Mini-DB Execution Engine
+#### 5.5 Internal Mini-DB Execution Engine
 - [ ] Create execution engine service
 - [ ] Implement LQP to SQL translation for internal tables
 - [ ] Add support for complex queries with joins
