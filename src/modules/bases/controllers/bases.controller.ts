@@ -17,7 +17,7 @@ import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 @ApiTags('Bases')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('api/v1')
+@Controller('')
 export class BasesController {
   constructor(private readonly basesService: BasesService) {}
 

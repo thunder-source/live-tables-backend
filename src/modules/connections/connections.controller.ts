@@ -28,7 +28,7 @@ import { plainToInstance } from 'class-transformer';
 @ApiTags('connections')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard)
-@Controller('api/v1/connections')
+@Controller('connections')
 export class ConnectionsController {
   constructor(private readonly connectionsService: ConnectionsService) {}
 
