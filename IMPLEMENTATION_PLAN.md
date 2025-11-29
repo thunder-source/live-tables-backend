@@ -212,11 +212,11 @@ POST   /api/v1/connections/:id/query
 ### **Phase 5: Base & Internal Mini-DB** (Week 9-11)
 
 #### 5.1 Base Management
-- [ ] Create base metadata schema
-- [ ] Implement base CRUD operations
-- [ ] Implement base duplication/template system
-- [ ] Add base customization (color, icon, description)
-- [ ] Implement base-level permissions (if different from workspace)
+- [x] Create base metadata schema
+- [x] Implement base CRUD operations
+- [ ] Implement base duplication/template system (Future)
+- [x] Add base customization (color, icon, description)
+- [ ] Implement base-level permissions (Future)
 
 **Database Schema (Bases):**
 ```sql
@@ -233,13 +233,13 @@ CREATE TABLE bases (
 );
 ```
 
-#### 5.2 Table Management
-- [ ] Create table metadata schema
-- [ ] Implement table CRUD operations
-- [ ] Create dynamic PostgreSQL table creation
-- [ ] Implement schema versioning
-- [ ] Add table-level settings (validation, constraints)
-- [ ] Create table archiving/soft delete
+#### 5.2 Table Management (JSONB Approach)
+- [x] Create table metadata schema
+- [x] Implement table CRUD operations
+- [x] Create dynamic PostgreSQL JSONB table creation
+- [x] Implement schema versioning
+- [x] Add column validation (via metadata)
+- [x] Create table archiving/soft delete
 
 **Database Schema (Tables):**
 ```sql
@@ -255,14 +255,14 @@ CREATE TABLE tables (
 );
 ```
 
-#### 5.3 Column Management
-- [ ] Create column metadata schema
-- [ ] Implement column CRUD operations
-- [ ] Support multiple data types (string, number, boolean, date, etc.)
-- [ ] Add column validation rules
-- [ ] Implement default values
-- [ ] Support column reordering
-- [ ] Create column type migration system
+#### 5.3 Column Management (Metadata Only - No ALTER TABLE)
+- [x] Create column metadata schema
+- [x] Implement column CRUD operations
+- [x] Support multiple data types (7 types implemented)
+- [x] Add column validation rules (JSONB storage)
+- [x] Implement default values
+- [x] Support column reordering
+- [x] Type validation and coercion at application layer
 
 **Supported Column Types:**
 - Text (short, long)
@@ -273,13 +273,13 @@ CREATE TABLE tables (
 - User reference
 - File/Attachment
 
-#### 5.4 Row Data Management
-- [ ] Implement row CRUD operations
-- [ ] Add bulk row operations
-- [ ] Create efficient pagination (cursor-based)
-- [ ] Implement row versioning for conflict resolution
-- [ ] Add row-level locking
-- [ ] Create row filtering and sorting
+#### 5.4 Row Data Management (JSONB Operations)
+- [x] Implement row CRUD operations
+- [x] Add bulk row operations
+- [x] Create efficient pagination (offset/limit)
+- [x] Implement row versioning for conflict resolution (optimistic locking)
+- [x] Add row-level locking (version-based)
+- [x] Create row filtering and sorting (JSONB operators)
 
 **API Endpoints:**
 ```
@@ -307,12 +307,12 @@ POST   /api/v1/tables/:id/rows/bulk
 ```
 
 #### 5.5 Internal Mini-DB Execution Engine
-- [ ] Create execution engine service
-- [ ] Implement LQP to SQL translation for internal tables
-- [ ] Add support for complex queries with joins
-- [ ] Implement computed column evaluation
-- [ ] Create query optimization layer
-- [ ] Add query caching mechanism
+- [/] Create execution engine service
+- [/] Implement LQP to JSONB SQL translation for internal tables
+- [ ] Add support for complex queries with joins (Future)
+- [ ] Implement computed column evaluation (Future)
+- [ ] Create query optimization layer (Future)
+- [ ] Add query caching mechanism (Future)
 
 ---
 
