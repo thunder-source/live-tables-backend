@@ -13,6 +13,7 @@ import { HealthModule } from './modules/health/health.module';
 import { ConnectionsModule } from './modules/connections/connections.module';
 import { BasesModule } from './modules/bases/bases.module';
 import { ViewsModule } from './modules/views/views.module';
+import { CollaborationModule } from './modules/collaboration/collaboration.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { ViewsModule } from './modules/views/views.module';
     ConnectionsModule,
     BasesModule,
     ViewsModule,
+    CollaborationModule,
   ],
   controllers: [AppController],
   providers: [

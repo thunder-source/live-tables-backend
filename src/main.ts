@@ -3,6 +3,7 @@ import { ValidationPipe, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { RedisIoAdapter } from './common/adapters/redis-io.adapter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -53,6 +54,11 @@ async function bootstrap() {
 
   // Graceful shutdown
   app.enableShutdownHooks();
+
+  // Redis Adapter for Socket.IO
+  const redisIoAdapter = new RedisIoAdapter(app);
+  await redisIoAdapter.connectToRedis();
+  app.useWebSocketAdapter(redisIoAdapter);
 
   const port = configService.get<number>('port') || 3000;
   await app.listen(port);
